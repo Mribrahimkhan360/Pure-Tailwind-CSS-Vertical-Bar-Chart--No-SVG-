@@ -69,12 +69,6 @@ public function getCategoryWiseVisitors(Request $request)
           </div>
         </div>
 ```
----
-
----
-
-নিশ্চয়ই ✅ নিচে তোমার প্রোজেক্টের জন্য **সম্পূর্ণ `README.md` ফাইল** রেডি করে দিলাম।
-তুমি সরাসরি কপি করে তোমার প্রোজেক্টের root folder এ `README.md` হিসেবে save করতে পারো।
 
 ---
 
