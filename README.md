@@ -1,4 +1,44 @@
 ---
+<div className="my-10 bg-white p-6 shadow-lg rounded-xl">
+          <h3 className="text-2xl font-bold mb-6 text-center">
+            Category Wise Visitors (Bar Chart)
+          </h3>
+
+          <div className="flex items-end justify-start gap-6 overflow-x-auto h-72 px-4">
+            {categoryWiseVisitors.map((item, index) => {
+              const max = Math.max(...categoryWiseVisitors.map(d => d.total));
+              const heightPercent = (item.total / max) * 100;
+
+              return (
+                <div
+                  key={index}
+                  className="flex flex-col items-center min-w-[70px]"
+                >
+                  {/* VALUE */}
+                  <span className="mb-2 text-sm font-bold text-gray-700">
+                    {item.total}
+                  </span>
+
+                  {/* BAR */}
+                  <div className="h-52 w-12 bg-gray-200 rounded-lg flex items-end overflow-hidden">
+                    <div
+                      className="w-full bg-gradient-to-t from-blue-500 to-indigo-600 rounded-lg transition-all duration-500"
+                      style={{ height: `${heightPercent}%` }}
+                    />
+                  </div>
+
+                  {/* LABEL */}
+                  <span className="mt-2 text-xs text-gray-800 font-medium truncate w-16 text-center">
+                    {(item.page_type ?? "Unknown").slice(0, 8)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+---
+
+---
 
 # ✅ **Container Div (Outer Box)**
 
