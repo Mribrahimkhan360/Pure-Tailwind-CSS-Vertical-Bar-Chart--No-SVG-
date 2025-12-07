@@ -1,3 +1,4 @@
+```
 // Api
 Route::get('/visitor/log-category-wise-visitors', [VisitorTrackingController::class, 'getCategoryWiseVisitors']);
 
@@ -67,6 +68,7 @@ public function getCategoryWiseVisitors(Request $request)
             })}
           </div>
         </div>
+```
 ---
 
 ---
