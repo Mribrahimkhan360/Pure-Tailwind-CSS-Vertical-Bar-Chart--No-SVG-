@@ -1,3 +1,35 @@
+// Api
+Route::get('/visitor/log-category-wise-visitors', [VisitorTrackingController::class, 'getCategoryWiseVisitors']);
+
+// controller
+public function getCategoryWiseVisitors(Request $request)
+    {
+        $data = VisitorLog::select(
+        'page_type',
+        DB::raw("COUNT(*) AS total")
+        )
+        ->groupBy('page_type')
+        ->orderByDesc('total')
+        ->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Visitor count by page type',
+            'data' => $data
+        ], 200);
+    }
+// modal
+     protected $fillable = [
+        'visitor_id',
+        'page_url',
+        'page_type',
+        'page_id',
+        'page_name',
+        'started_at',
+        'ended_at',
+        'duration_seconds',
+    ];
+
 <div className="my-10 bg-white p-6 shadow-lg rounded-xl">
           <h3 className="text-2xl font-bold mb-6 text-center">
             Category Wise Visitors (Bar Chart)
