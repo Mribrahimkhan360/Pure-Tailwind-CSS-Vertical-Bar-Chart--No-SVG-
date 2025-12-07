@@ -68,6 +68,74 @@ public function getCategoryWiseVisitors(Request $request)
             })}
           </div>
         </div>
+
+
+
+
+async function getData() {
+  try {
+    const responseVisLog = await fetch(`${baseURL}/api/visitor/log-get`);
+    const responseVis = await fetch(`${baseURL}/api/visitor/get`);
+    const responseLog = await fetch(`${baseURL}/api/visitor/log-category-wise-visitors`);
+
+    
+
+    const dataVisLog = await responseVisLog.json();
+    const dataVis = await responseVis.json();
+    const result = await responseLog.json();
+    console.log(result.data);
+      
+    console.log("Visitor Log Data: ", dataVisLog.data);
+
+
+    
+    // 1. total visitors
+    const totalVisitors = dataVisLog.data.length;
+    // 2. unique visitors
+    const uniqueVisitors = dataVis.data.length;
+
+    // 3. new visitors
+    const newVisitors = dataVis.data.filter(visitor => visitor.is_new === 1);
+    const newVisitorsCount = newVisitors.length; // new visitors count
+
+
+    const totalTime = dataVisLog.data
+    .map(v => v.duration_seconds)      // all duration find
+    .filter(v => v != null)            // undefined remove
+    .reduce((sum, v) => sum + v, 0);  // all value sum
+
+    // 4. Average time in seconds
+    const avgTimeSeconds = totalVisitors > 0 
+      ? Math.floor(totalTime / totalVisitors) 
+      : 0;
+
+    console.log("Total Time:", totalTime);
+
+    // 5. Convert seconds to minutes
+    const minutes = Math.floor(avgTimeSeconds / 60);
+    // const seconds = avgTimeSeconds % 60;
+    const seconds = (avgTimeSeconds % 60);
+
+    // 6. All Page Type Fetch
+    setCategoryWiseVisitors(result.data);  
+    
+    setStats({
+      totalVisitors: totalVisitors,
+      uniqueVisitors: uniqueVisitors,
+      newVisitorsCount: newVisitorsCount,
+      avgTime: minutes,
+    });
+
+getData(); 
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+  // }, []);
+
+  useEffect(() => {
+    getData();   // call the function
+  }, []);
 ```
 
 ---
